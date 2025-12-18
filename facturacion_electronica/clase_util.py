@@ -129,23 +129,19 @@ def time_stamp(formato='%Y-%m-%dT%H:%M:%S'):
 def validar_xml(some_xml_string, validacion='doc'):
     if validacion == 'bol':
         return some_xml_string
+    # Slim package: Boleta (DTE 39) + tracking only.
+    # We only ship the XSDs required by this flow.
     validacion_type = {
-        'aec': 'AEC_v10.xsd',
-        'cesion': 'Cesion_v10.xsd',
-        'consu': 'ConsumoFolio_v10.xsd',
         'doc': 'DTE_v10.xsd',
-        'dte_cedido': 'DTECedido_v10.xsd',
-        'env': 'EnvioDTE_v10.xsd',
         'env_boleta': 'EnvioBOLETA_v11.xsd',
-        'env_recep': 'EnvioRecibos_v10.xsd',
-        'env_resp': 'RespuestaEnvioDTE_v10.xsd',
-        'libro': 'LibroCV_v10.xsd',
-        'libro_s': 'LibroCVS_v10.xsd',
-        'libro_boleta': 'LibroBOLETA_v10.xsd',
-        'libro_guia': 'LibroGuia_v10.xsd',
-        'recep': 'Recibos_v10.xsd',
         'sig': 'xmldsignature_v10.xsd',
     }
+    if validacion not in validacion_type:
+        raise UserError(
+            "XSD validation not included in boleta_rapida_tracking_min for type: %s. "
+            "This repo only includes schemas for 'doc', 'env_boleta' and 'sig'."
+            % validacion
+        )
     xsdpath = os.path.dirname(os.path.realpath(__file__)) + '/xsd/'
     xsd_file = xsdpath + validacion_type[validacion]
     try:
