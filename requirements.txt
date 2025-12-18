@@ -1,0 +1,8 @@
+lxml
+cryptography==41.0.7
+pyOpenSSL==23.2.0
+pytz
+pdf417gen>=0.6.0
+zeep>=3.4.0
+requests>=2.24.0
+urllib3>=1.25.10

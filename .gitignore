@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Entornos
+.venv/
+venv/
+.env
+.env.*
+
+# macOS
+.DS_Store
+
+# Logs / temporales
+*.log
+*.tmp
+
+# Secretos / certificados / llaves (NO versionar)
+*.pfx
+*.p12
+*.key
+*.pem
+*.crt
+
+# CAF (NO versionar por seguridad/operación)
+facturacion_electronica/Folios/*.xml
+
+# Persistencia local / salidas
+facturacion_electronica/out/
+facturacion_electronica/out/**
+
+# (Opcional) Si quieres mantener el estado de folio fuera de git
+# facturacion_electronica/out/folio_state.json

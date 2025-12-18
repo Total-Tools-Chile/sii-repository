@@ -1,0 +1,57 @@
+{
+  "test": true,
+  "verify": true,
+  "Emisor": {
+    "RUTEmisor": "76387093-6",
+    "RznSoc": "INVERSIONES LUIS ANDRÉS ZUÑIGA CASTILLO",
+    "GiroEmis": "FONDOS Y SOCIEDADES DE INVERSION Y ENTIDADES FINANCIERAS SIMILARES",
+    "DirOrigen": "VICTORIA #1543",
+    "CmnaOrigen": "SANTIAGO",
+    "CiudadOrigen": "SANTIAGO",
+    "Modo": "certificacion",
+    "NroResol": 0,
+    "FchResol": "2018-07-18",
+    "ValorIva": 19
+  },
+  "firma_electronica": {},
+  "ID": "EjemploBasico39",
+  "Documento": [
+    {
+      "TipoDTE": 39,
+      "caf_file": [],
+      "documentos": [
+        {
+          "NroDTE": 1,
+          "IndServicio": 3,
+          "Encabezado": {
+            "IdDoc": {
+              "Folio": 0,
+              "FchEmis": "2025-01-01"
+            },
+            "Receptor": {
+              "RUTRecep": "66666666-6",
+              "RznSocRecep": "Sin RUT",
+              "DirRecep": "Santiago",
+              "CmnaRecep": "Santiago"
+            }
+          },
+          "Detalle": [
+            {
+              "NmbItem": "Producto 1",
+              "QtyItem": 1,
+              "UnmdItem": "UN",
+              "PrcItem": 1000,
+              "Impuesto": [
+                {
+                  "CodImp": 14,
+                  "price_include": true,
+                  "TasaImp": 19.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
