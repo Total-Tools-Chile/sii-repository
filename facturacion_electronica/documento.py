@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 from facturacion_electronica.dte import DTE
-from facturacion_electronica.documento_comisiones import DocumentoComisiones
-from facturacion_electronica.documento_exportacion import Exportacion
 from facturacion_electronica.documento_linea import LineaDetalle
 from facturacion_electronica.documento_referencias import Referencia
 from facturacion_electronica.linea_impuesto import LineaImpuesto
@@ -126,7 +124,10 @@ class Documento(DTE):
 
     @Aduana.setter
     def Aduana(self, vals):
-        self._aduana = Exportacion(vals)
+        raise UserError(
+            "Feature not included in boleta_rapida_tracking_min: Exportacion/Aduana. "
+            "This repo is intentionally slim (Boleta DTE 39 + tracking only)."
+        )
 
     @property
     def CiudadDest(self):
@@ -261,16 +262,10 @@ class Documento(DTE):
 
     @Comisiones.setter
     def Comisiones(self, vals):
-        _comisiones  = []
-        if type(vals) is dict:
-            vals = [vals]
-        for val in vals:
-            if not val.get('TasaIVA', False):
-                val['TasaIVA'] = self.TasaIVA
-            _comisiones.append(
-                DocumentoComisiones(val)
-            )
-        self._comisiones = _comisiones
+        raise UserError(
+            "Feature not included in boleta_rapida_tracking_min: DocumentoComisiones. "
+            "This repo is intentionally slim (Boleta DTE 39 + tracking only)."
+        )
 
     @property
     def CredEC(self):

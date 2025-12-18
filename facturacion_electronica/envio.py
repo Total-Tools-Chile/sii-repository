@@ -1,12 +1,18 @@
 # -#- coding: utf-8 -#-
-from facturacion_electronica.cesion import Cesion as AEC
+"""
+Envio (DTE/BOLETA).
+
+Nota: este repo se usa como distribución mínima para Boleta (DTE 39) + tracking.
+Para no arrastrar módulos no usados (cesión/libros/consumo folios), evitamos imports
+globales de esos módulos y los dejamos como imports diferidos (lazy) dentro de los
+métodos que los requieren.
+"""
+
 from facturacion_electronica.conexion import Conexion
-from facturacion_electronica.consumo_folios import ConsumoFolios as CF
 from facturacion_electronica.documento import Documento as Doc
 from facturacion_electronica.emisor import Emisor as Emis
 from facturacion_electronica.respuesta import Respuesta
 from facturacion_electronica.firma import Firma
-from facturacion_electronica.libro import Libro as Lib
 from facturacion_electronica import clase_util as util
 from facturacion_electronica.clase_util import UserError
 from facturacion_electronica.caf import Caf
@@ -40,11 +46,10 @@ class Envio(object):
 
     @Cesion.setter
     def Cesion(self, vals):
-        self._cesion = AEC(vals)
-        self._cesion._dte_emisor = self.Emisor
-        self._cesion._firma = self.firma
-        self._cesion.verify = self.verify
-        self._cesion.test = self.test
+        raise UserError(
+            "Feature not included in boleta_rapida_tracking_min: Cesion. "
+            "This repo is intentionally slim (Boleta DTE 39 + tracking only)."
+        )
 
     @property
     def conexion(self):
@@ -67,10 +72,10 @@ class Envio(object):
 
     @ConsumoFolios.setter
     def ConsumoFolios(self, vals):
-        _cfs = []
-        for cf in vals:
-            _cfs.append(CF(cf))
-        self._consumo_folios = _cfs
+        raise UserError(
+            "Feature not included in boleta_rapida_tracking_min: ConsumoFolios. "
+            "This repo is intentionally slim (Boleta DTE 39 + tracking only)."
+        )
 
     @property
     def Documento(self):
@@ -199,9 +204,10 @@ class Envio(object):
 
     @Libro.setter
     def Libro(self, vals):
-        self._libro = Lib()
-        self._libro._dte_emisor = self.Emisor
-        util.set_from_keys(self._libro, vals)
+        raise UserError(
+            "Feature not included in boleta_rapida_tracking_min: Libro. "
+            "This repo is intentionally slim (Boleta DTE 39 + tracking only)."
+        )
 
     @property
     def Recepciones(self):

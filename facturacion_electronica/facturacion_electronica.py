@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
-from facturacion_electronica.libro_boletas import Boletas
-from facturacion_electronica.cesion import Cesion
+"""
+Entrypoints de alto nivel.
+
+Nota: este repo se distribuye como mínimo para Boleta (DTE 39) + tracking.
+Para no arrastrar módulos no usados (cesión/libros/consumo folios), evitamos
+imports globales de esos módulos. Si alguien llamara funciones que requieren
+esas features, se importarán dentro de la función (lazy import).
+"""
+
 from facturacion_electronica.conexion import Conexion
-from facturacion_electronica.consumo_folios import ConsumoFolios
 from facturacion_electronica.documento import Documento
 from facturacion_electronica.emisor import Emisor
 from facturacion_electronica.envio import Envio
 from facturacion_electronica.firma import Firma
-from facturacion_electronica.libro import Libro
 from facturacion_electronica.caf import Caf
 import json
 import csv
