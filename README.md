@@ -326,13 +326,55 @@ Notes:
 ### 8.6 Encoding errors / invalid characters (CAF)
 
 - **Symptom**: XSD validation fails due to strange characters (e.g., U+FFFD / `&#65533;`).
-- **Typical cause**: CAF was downloaded/saved with incorrect encoding or got “corrupted”.
-- **Mitigation**: re-download the CAF as a file (do not copy/paste from browser) and avoid edits.
+- **Typical cause**: CAF was downloaded/saved with incorrect encoding or got “corrupted” by an editor/viewer (re-encoding on save).
+- **Mitigation**: re-download the CAF as a file (do not copy/paste from browser) and **do not open/edit it in text editors**. Treat it as a binary/immutable input and only reference its path.
 
 ---
 
 ## 9) Operational notes
 
+- **IMPORTANT: DO NOT OPEN THE CAF** in VSCode/Notepad/Word/Excel or any editor/viewer. Even if you “just open it”, it is very common to accidentally save it and change encoding/line-endings, which breaks the CAF signature and later causes SII errors (e.g., 514) or schema/encoding failures.
+- **Always treat the CAF as immutable**: download it from SII, store it, and only reference it by path (e.g., `CAF39_PATH` / `facturacion_electronica/Folios/CAF39.xml`).
 - **Do not edit the CAF manually** (it invalidates the signature and SII returns error 514).
 - If you switch CAF (different range), delete or adjust `facturacion_electronica/out/folio_state.json` to avoid jumps/collisions.
 - If you are missing `lxml` or other dependencies, install with `pip install -r requirements.txt`.
+
+---
+
+## 10) Java equivalents (libraries similar to Python dependencies)
+
+If you re-implement this flow in Java, these are common equivalents to the Python libraries used here:
+
+- **HTTP client (`requests`, `urllib3`)**
+
+  - Java: `java.net.http.HttpClient` (JDK 11+) or OkHttp / Apache HttpClient
+  - Needed for: `GET` seed, `POST` token, `POST` multipart envío, `GET` tracking
+
+- **XML parsing + XSD validation (`lxml`)**
+
+  - Java: JAXP (`DocumentBuilderFactory`, `SchemaFactory`) + Xerces (often used under the hood)
+  - Needed for: building/parsing XML, validating against XSD
+
+- **XML Digital Signature (XMLDSIG) / Canonicalization**
+
+  - Java: Apache Santuario (`org.apache.santuario:xmlsec`) or built-in `javax.xml.crypto.dsig` (may vary by JDK/provider)
+  - Needed for: signing seed XML, signing `Documento` and `SetDTE`, canonicalization (C14N)
+
+- **Crypto / Certificates / PKCS#12 (`cryptography`, `pyOpenSSL`)**
+
+  - Java: Bouncy Castle (`bcprov` + `bcpkix`) and/or Java `KeyStore` (`PKCS12`)
+  - Needed for: loading `.pfx/.p12`, extracting private key + certificate, RSA-SHA1 signing
+
+- **Timezone utilities (`pytz`)**
+
+  - Java: `java.time` (`ZonedDateTime`, `ZoneId.of(\"America/Santiago\")`)
+  - Needed for: `TmstFirmaEnv` / `TmstFirma` and time formatting
+
+- **PDF417 (`pdf417gen`)**
+
+  - Java: ZXing (`com.google.zxing:core`) supports PDF_417 (or other PDF417 encoders)
+  - Needed for: generating the barcode image from TED
+
+- **SOAP client (`zeep`)**
+  - Java: JAX-WS or Apache CXF
+  - Note: this slim repo focuses on boleta+tracking over REST endpoints; SOAP may be used in other DTE flows.
